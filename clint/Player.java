@@ -17,327 +17,320 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import twicetry.*;
-import twicetry.chess.SavingChess;
 import twicetry.chess.GetPlace;
-import twicetry.server.Serverlist;
-
+import twicetry.chess.SavingChess;
 import java.io.*;
+import twicetry.server.Serverlist;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
 public class Player extends Application implements IndexForGame {
-    private static WholePaneGame linePane = WholePaneGame.decideplace();
-    ArrayList<PlayerMessage> playerlist=new ArrayList<>();
-    private Button buttonstart = new Button("开始游戏");
-    private Button buttontuichu = new Button("退出游戏");
-    private Button btfanhui = new Button("退出");
-    private ImageView playerq = new ImageView();
-    private Label tchess = new Label("");
-    private static Circle signForpane = new Circle(3);
-    private OtherList mc = new OtherList();
-    public static double x;
-    public static double y;
-    private String str = null;
-    private boolean stop = true;
-    private int data;
-    private static int[][] chess = new int[3][3];
-    private ImageView[][] circles = new ImageView[3][3];
-    private int player = 0;
-    private int myChess = 0;
-    private int otherChess = 0;
-    private boolean myTurn = false;
-    private boolean waiting = true;
-    private int rowNow;
-    private int colNow;
-    private boolean Gamecontinue = true;
-    private DataInputStream InputStream;
-    private DataOutputStream OutputStream;
-    private Button login = new Button("登录");
-    private Button register = new Button("注册");
-    Button determine = new Button("确定");
-    TextArea textArea = new TextArea();
-    TextField tf = new TextField();
-    Pane pane = new Pane();
-    String name;
-    String passp;
-    TextField id = new TextField ();
-    PasswordField passport = new PasswordField();
-    Button b1=new Button("注册");
-    Button b2=new Button("登录");
+  private static WholePaneGame linePane = WholePaneGame.decideplace();
+  ArrayList<PlayerMessage> playerlist = new ArrayList<>();
+  private Button buttonstart = new Button("开始游戏");
+  private Button buttontuichu = new Button("退出游戏");
+  private Button btfanhui = new Button("退出");
+  private ImageView playerq = new ImageView();
+  private Label tchess = new Label("");
+  private static Circle signForpane = new Circle(3);
+  private OtherList mc = new OtherList();
+  public static double x;
+  public static double y;
+  private String str = null;
+  private boolean stop = true;
+  private int data;
+  private static int[][] chess = new int[3][3];
+  private ImageView[][] circles = new ImageView[3][3];
+  private int player = 0;
+  private int myChess = 0;
+  private int otherChess = 0;
+  private boolean myTurn = false;
+  private boolean waiting = true;
+  private int rowNow;
+  private int colNow;
+  private boolean GameContinue = true;
+  private DataInputStream InputStream;
+  private DataOutputStream OutputStream;
+  private Button login = new Button("登录");
+  private Button register = new Button("注册");
+  Button determine = new Button("确定");
+  TextArea textArea = new TextArea();
+  TextField tf = new TextField();
+  Pane pane = new Pane();
+  String name;
+  String passp;
+  TextField id = new TextField ();
+  PasswordField passport = new PasswordField();
+  Button b1 = new Button("注册");
+  Button b2 = new Button("登录");
 
-    public static void main(String[] args) {
+  public static void main(String[] args) {
         launch(args);
     }
 
-
-    public static void Serverfail1() {
+  public static void Serverfail1() {
         new ShowStringDetail().display("\n服务器中断,对局结束\n");
-    }
-    public static void Serverfail2() {
+  }
+
+  public static void Serverfail2() {
         new InputWindow().display("\n服务器中断,对局结束\n");
     }
 
 
     @Override
-    public void start(Stage primaryStage) {
-        tchess.setFont(new Font("黑体", 27));
-        tchess.setTextFill(Color.BLACK);
-        Label label = new Label("\n 井字棋\n   ");
-        label.setFont(Font.font("黑体", 40));
-        buttonstart.setFont(new Font("黑体", 40));
-        buttonstart.setBackground(Background.EMPTY);
-        buttontuichu.setFont(new Font("黑体", 40));
-        buttontuichu.setBackground(Background.EMPTY);
-        btfanhui.setFont(new Font("黑体", 20));
-        btfanhui.setBackground(Background.EMPTY);
-        login.setFont(new Font("黑体", 40));
-        login.setBackground(Background.EMPTY);
-        register.setFont(new Font("黑体", 40));
-        register.setBackground(Background.EMPTY);
-        determine.setFont(new Font("黑体", 40));
-        determine.setBackground(Background.EMPTY);
-        signForpane.setFill(Color.WHITE);
+  public void start(Stage primaryStage) {
+    tchess.setFont(new Font("黑体", 27));
+    tchess.setTextFill(Color.BLACK);
+    Label label = new Label("\n 井字棋\n   ");
+    label.setFont(Font.font("黑体", 40));
+    buttonstart.setFont(new Font("黑体", 40));
+    buttonstart.setBackground(Background.EMPTY);
+    buttontuichu.setFont(new Font("黑体", 40));
+    buttontuichu.setBackground(Background.EMPTY);
+    btfanhui.setFont(new Font("黑体", 20));
+    btfanhui.setBackground(Background.EMPTY);
+    login.setFont(new Font("黑体", 40));
+    login.setBackground(Background.EMPTY);
+    register.setFont(new Font("黑体", 40));
+    register.setBackground(Background.EMPTY);
+    determine.setFont(new Font("黑体", 40));
+    determine.setBackground(Background.EMPTY);
+    signForpane.setFill(Color.WHITE);
+    VBox vBox0 = new VBox(15);
+    vBox0.getChildren().add(label);
+    vBox0.getChildren().add(new HBox(new Label("      "), register));
+    vBox0.getChildren().add(new HBox(new Label("      "), login));
+    VBox vBox1 = new VBox(15);
+    vBox1.getChildren().add(label);
+    vBox1.getChildren().add(new HBox(new Label("      "), buttonstart));
+    vBox1.getChildren().add(new HBox(new Label("      "), buttontuichu));
+    Scene scene = new Scene(new Group(), 300, 120);
 
-        VBox vBox0 = new VBox(15);
-        vBox0.getChildren().add(label);
-        vBox0.getChildren().add(new HBox(new Label("      "), register));
-        vBox0.getChildren().add(new HBox(new Label("      "), login));
+    GridPane grid = new GridPane();
+    grid.setVgap(4);
+    grid.setHgap(10);
+    grid.setPadding(new Insets(5, 5, 5, 5));
+    grid.add(new Label("ID:"), 0, 0);
+    grid.add(id, 1, 0);
+    grid.add(new Label("Passport:"), 0, 3);
+    grid.add(passport, 1, 3);
+    grid.add(b1, 0, 4);
+    grid.add(b2, 1, 4);
 
-        VBox vBox1 = new VBox(15);
-        vBox1.getChildren().add(label);
-        vBox1.getChildren().add(new HBox(new Label("      "), buttonstart));
-        vBox1.getChildren().add(new HBox(new Label("      "), buttontuichu));
-        Scene scene = new Scene(new Group(), 300, 120);
+    Group root = (Group) scene.getRoot();
+    root.getChildren().add(grid);
+    primaryStage.setScene(scene);
+    primaryStage.show();
 
-        GridPane grid = new GridPane();
-        grid.setVgap(4);
-        grid.setHgap(10);
-        grid.setPadding(new Insets(5, 5, 5, 5));
-        grid.add(new Label("ID:"), 0, 0);
-        grid.add(id, 1, 0);
-        grid.add(new Label("Passport:"), 0, 3);
-        grid.add(passport, 1, 3);
-        grid.add(b1, 0, 4);
-        grid.add(b2, 1, 4);
+    textArea.setPrefColumnCount(12);
+    textArea.setPrefRowCount(15);
+    textArea.setWrapText(true);
+    textArea.setEditable(false);
 
-        Group root = (Group) scene.getRoot();
-        root.getChildren().add(grid);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    tf.setOpacity(0.8);
 
-        textArea.setPrefColumnCount(12);
-        textArea.setPrefRowCount(15);
-        textArea.setWrapText(true);
-        textArea.setEditable(false);
-
-        tf.setOpacity(0.8);
-
-        b1.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                String name0=id.getText();
-                String passp0=passport.getText();
-
-                PlayerMessage playerMessage=new PlayerMessage(name0,passp0,0,0);
-                try {
-                    playerlist=takeoutList(new File(IndexForGame.FILEPATH_LIST));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                for(PlayerMessage p:playerlist){
-                    if(p.getId().equals(name0)){
-                        new ShowStringDetail().display("用户名已被注册");
+    b1.setOnAction(new EventHandler<ActionEvent>() {
+          @Override
+          public void handle(ActionEvent actionEvent) {
+            String name0 = id.getText();
+            String passp0 = passport.getText();
+            PlayerMessage playerMessage = new PlayerMessage(name0, passp0, 0, 0);
+            try {
+               playerlist = takeoutList(new File(IndexForGame.FILEPATH_LIST));
+            } catch (IOException e) {
+               throw new RuntimeException(e);
+            }
+            for (PlayerMessage p : playerlist) {
+              if (p.getId().equals(name0)) {
+                    new ShowStringDetail().display("用户名已被注册");
                         System.exit(0);
-                    }
                 }
-                playerlist.add(playerMessage);
-                try {
+            }
+            playerlist.add(playerMessage);
+            try {
                     playerMessage.savelist(playerlist);
                     playerMessage.saveSGlist(playerlist);
-                } catch (IOException e) {
+            } catch (IOException e) {
                     throw new RuntimeException(e);
-                }
-                new ShowStringDetail().display("注册成功");
+            }
+            new ShowStringDetail().display("注册成功");
 
-                new Thread(() ->
-                {
-                    try {
-                        while (true) {
-                            x = primaryStage.getX();
-                            y = primaryStage.getY();
-                            Thread.sleep(100);
-                        }
+            new Thread(() -> {
+                try {
+                    while (true) {
+                      x = primaryStage.getX();
+                      y = primaryStage.getY();
+                      Thread.sleep(100);
+                    }
                     } catch (Exception e) {
-                    }
-                }).start();
+                }
+            }).start();
 
-                Pane pane1 = new Pane();
-                pane1.getChildren().add(new ImageView("Picture/Background2.jpg"));
-                pane1.getChildren().add(vBox1);
-                Scene scene1 = new Scene(pane1, 700, 650);
-                primaryStage.setResizable(false);
-                primaryStage.setTitle("井字棋");
-                primaryStage.setScene(scene1);
-                primaryStage.show();
-                HBox hBox = new HBox(10);
-                hBox.getChildren().add(tf);
+            Pane pane1 = new Pane();
+            pane1.getChildren().add(new ImageView("Picture/Background2.jpg"));
+            pane1.getChildren().add(vBox1);
+            Scene scene1 = new Scene(pane1, 700, 650);
+            primaryStage.setResizable(false);
+            primaryStage.setTitle("井字棋");
+            primaryStage.setScene(scene1);
+            primaryStage.show();
+            HBox hBox = new HBox(10);
+            hBox.getChildren().add(tf);
 
-                GridPane gridPane = new GridPane();
-                gridPane.add(btfanhui, 0, 94);
-                gridPane.setVgap(5);
-                gridPane.setHgap(5);
+            GridPane gridPane = new GridPane();
+            gridPane.add(btfanhui, 0, 94);
+            gridPane.setVgap(5);
+            gridPane.setHgap(5);
+            VBox vBox = new VBox(20);
+            vBox.getChildren().addAll(gridPane);
+            vBox.setPadding(new Insets(90, 0, 0, 0));
 
-                VBox vBox = new VBox(20);
-                vBox.getChildren().addAll(  gridPane);
-                vBox.setPadding(new Insets(90, 0, 0, 0));
+            BorderPane borderPane = new BorderPane();
+            borderPane.setCenter(new Label("  "));
+            borderPane.setLeft(linePane);
+            borderPane.setRight(vBox);
 
-                BorderPane borderPane = new BorderPane();
-                borderPane.setCenter(new Label("  "));
-                borderPane.setLeft(linePane);
-                borderPane.setRight(vBox);
+            pane.getChildren().add(new ImageView("Picture/Background1.jpg"));
+            pane.getChildren().add(borderPane);
 
-                pane.getChildren().add(new ImageView("Picture/Background1.jpg"));
-                pane.getChildren().add(borderPane);
+            buttonstart.setOnAction(e -> {
+              Serverlist.connectionAgain();
+              initialize();
+              Connection();
+              scene1.setRoot(pane);
 
-                buttonstart.setOnAction(e -> {
-                    Serverlist.connectionAgain();
-                    initialize();
-                    Connection();
-                    scene1.setRoot(pane);
+            });
 
-                });
-
-                buttontuichu.setOnAction(event -> {
+            buttontuichu.setOnAction(event -> {
                     System.exit(0);
-                });
+            });
 
-                btfanhui.setOnAction(e -> {
-                    try {
+            btfanhui.setOnAction(e -> {
+                try {
                         new ZeroSGlist();
-                    } catch (IOException ex) {
+                } catch (IOException ex) {
                         throw new RuntimeException(ex);
-                    }
+                }
 
-                    Gamecontinue = false;
-                    waiting = false;
-                    stop = false;
-                    release();
-                    scene1.setRoot(pane1);
-                });
+              GameContinue = false;
+              waiting = false;
+              stop = false;
+              release();
+              scene1.setRoot(pane1);
+            });
 
-                primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                     @Override
                     public void handle(WindowEvent event) {
                         System.exit(0);
                     }
                 });
-            }
-        });
+          }
+    });
 
-        b2.setOnAction(new EventHandler<ActionEvent>() {
+    b2.setOnAction(new EventHandler<ActionEvent>() {
 
 
             @Override
             public void handle(ActionEvent actionEvent) {
-                String name0=id.getText();
-                String passp0=passport.getText();
+                String name0 = id.getText();
+                String passp0 = passport.getText();
                 try {
-                    playerlist=takeoutList(new File(IndexForGame.FILEPATH_LIST));
+                    playerlist = takeoutList(new File(IndexForGame.FILEPATH_LIST));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                int j=0;
-                for(PlayerMessage p:playerlist){
-                    if(p.getId().equals(name0)&&p.getPassport().equals(passp0)){
+                int j = 0;
+                for (PlayerMessage p : playerlist) {
+                    if (p.getId().equals(name0) && p.getPassport().equals(passp0)) {
                         new ShowStringDetail().display("登陆成功");
-                        j=1;
+                        j = 1;
                         break;
                     }
                 }
-                if(j==0){
+                if (j == 0) {
                     new ShowStringDetail().display("用户名或密码错误");
                     System.exit(0);
                 }
-                new Thread(() ->
-                {
+                new Thread(() -> {
                     try {
                         while (true) {
-                            x = primaryStage.getX();
-                            y = primaryStage.getY();
-                            Thread.sleep(100);
+                          x = primaryStage.getX();
+                          y = primaryStage.getY();
+                          Thread.sleep(100);
                         }
-                    } catch (Exception e) {
-                    }
+                    } catch (Exception e) {}
                 }).start();
 
-                Pane pane1 = new Pane();
-                pane1.getChildren().add(new ImageView("Picture/Background2.jpg"));
-                pane1.getChildren().add(vBox1);
-                Scene scene1 = new Scene(pane1, 1000, 740);
-                primaryStage.setResizable(false);
-                primaryStage.setTitle("井字棋");
-                primaryStage.setScene(scene1);
-                primaryStage.show();
-                HBox hBox = new HBox(10);
-                hBox.getChildren().add(tf);
+            Pane pane1 = new Pane();
+            pane1.getChildren().add(new ImageView("Picture/Background2.jpg"));
+            pane1.getChildren().add(vBox1);
+            Scene scene1 = new Scene(pane1, 700, 650);
+            primaryStage.setResizable(false);
+            primaryStage.setTitle("井字棋");
+            primaryStage.setScene(scene1);
+            primaryStage.show();
+            HBox hBox = new HBox(10);
+            hBox.getChildren().add(tf);
 
-                GridPane gridPane = new GridPane();
-                gridPane.add(btfanhui, 0, 5);
-                gridPane.setVgap(5);
-                gridPane.setHgap(5);
+            GridPane gridPane = new GridPane();
+            gridPane.add(btfanhui, 0, 94);
+            gridPane.setVgap(5);
+            gridPane.setHgap(5);
 
-                VBox vBox = new VBox(20);
-                vBox.getChildren().addAll(new StackPane(playerq), new StackPane(tchess), textArea, hBox, gridPane);
-                vBox.setPadding(new Insets(90, 0, 0, 0));
+            VBox vBox = new VBox(20);
+            vBox.getChildren().addAll(gridPane);
+            vBox.setPadding(new Insets(90, 0, 0, 0));
 
-                BorderPane borderPane = new BorderPane();
-                borderPane.setCenter(new Label("  "));
-                borderPane.setLeft(linePane);
-                borderPane.setRight(vBox);
+            BorderPane borderPane = new BorderPane();
+            borderPane.setCenter(new Label("  "));
+            borderPane.setLeft(linePane);
+            borderPane.setRight(vBox);
 
-                pane.getChildren().add(new ImageView("Picture/Background1.jpg"));
-                pane.getChildren().add(borderPane);
+            pane.getChildren().add(new ImageView("Picture/Background1.jpg"));
+            pane.getChildren().add(borderPane);
 
-                buttonstart.setOnAction(e -> {
-                    Serverlist.connectionAgain();
-                    initialize();
-                    Connection();
-                    scene1.setRoot(pane);
+            buttonstart.setOnAction(e -> {
+              Serverlist.connectionAgain();
+              initialize();
+              Connection();
+              scene1.setRoot(pane);
+            });
 
-                });
-                buttontuichu.setOnAction(event -> {
+            buttontuichu.setOnAction(event -> {
                     System.exit(0);
-                });
+            });
 
-                btfanhui.setOnAction(e -> {
+            btfanhui.setOnAction(e -> {
                     try {
                         new ZeroSGlist();
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
-                    Gamecontinue = false;
-                    waiting = false;
-                    stop = false;
-                    release();
-                    scene1.setRoot(pane1);
-                });
 
-                primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+              GameContinue = false;
+              waiting = false;
+              stop = false;
+              release();
+              scene1.setRoot(pane1);
+            });
+
+            primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                     @Override
                     public void handle(WindowEvent event) {
                         System.exit(0);
                     }
-                });
+            });
             }
         });
     }
 
     private void Connection() {
-        name=id.getText();
-        passp=passport.getText();
-        PlayerMessage playermessage1=new PlayerMessage(id.getText(), passport.getText());
+        name = id.getText();
+        passp = passport.getText();
+        PlayerMessage playermessage1 = new PlayerMessage(id.getText(), passport.getText());
         playermessage1.addPlayer(playermessage1);
 
         try {
@@ -354,7 +347,7 @@ public class Player extends Application implements IndexForGame {
                     otherChess = 2;
 
                     Platform.runLater(() -> {
-                        ArrayList<PlayerMessage> pl= null;
+                        ArrayList<PlayerMessage> pl = null;
                         try {
                             pl = takeoutList(new File("C:\\Users\\Evan玖\\Desktop\\java\\A2\\Tic-tac-toe-master\\out\\production\\Tic-tac-toe-master\\twicetry\\sameGamePlayer.txt"));
                         } catch (IOException e) {
@@ -374,17 +367,18 @@ public class Player extends Application implements IndexForGame {
                     InputStream.readInt();
 
                     Platform.runLater(() -> {
-                        String n="";
-                        ArrayList<PlayerMessage> fpl= null;
+                        String n = "";
+                        ArrayList<PlayerMessage> fpl = null;
                         try {
-                            fpl = takeoutList(new File("C:\\Users\\Evan玖\\Desktop\\java\\A2\\Tic-tac-toe-master\\out\\production\\Tic-tac-toe-master\\twicetry\\sameGamePlayer.txt"));
+                            fpl = takeoutList(new File("C:\\Users\\Evan玖\\Desktop\\java\\A2\\" +
+                                    "Tic-tac-toe-master\\out\\production\\Tic-tac-toe-master\\twicetry\\sameGamePlayer.txt"));
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
                         ArrayList<PlayerMessage> ffinalPl = fpl;
-                        for(PlayerMessage p: ffinalPl){
-                            if(!Objects.equals(p.getId(), name)){
-                                n=p.getId();
+                        for (PlayerMessage p : ffinalPl){
+                            if (!Objects.equals(p.getId(), name)) {
+                                n = p.getId();
                             }
                         }
                         new ShowStringDetail().display("\nPlayer2进入对局，您先走棋\n ");
@@ -396,19 +390,19 @@ public class Player extends Application implements IndexForGame {
                     myChess = 2;
                     otherChess = 1;
                     Platform.runLater(() -> {
-                        playerq.setImage(new Image("Picture/1.png"));
-                        new ShowStringDetail().display("\n您是X,请等待对手的回合！\n ");
-                        tchess.setText("轮到对方的回合");
+                      playerq.setImage(new Image("Picture/1.png"));
+                      new ShowStringDetail().display("\n您是X,请等待对手的回合！\n ");
+                      tchess.setText("轮到对方的回合");
                     });
                     passData();
                 }
 
-                while (Gamecontinue) {
+                while (GameContinue) {
                     if (player == people1) {
-                        Paneevent(player);
-                        TimeforP();
-                        socketevent();
-                        GetServer();
+                Paneevent(player);
+                TimeforP();
+                socketevent();
+                GetServer();
                     } else if (player == people2) {
                         GetServer();
                         Paneevent(player);
@@ -426,7 +420,7 @@ public class Player extends Application implements IndexForGame {
 
         new Thread(() -> {
             SimpleDateFormat sdf = new SimpleDateFormat("");
-            while (Gamecontinue) {
+            while (GameContinue) {
                 int index;
                 try {
                     index = InputStream.readInt();
@@ -458,17 +452,16 @@ public class Player extends Application implements IndexForGame {
                         {
                             Date date1 = new Date();
                             textArea.appendText(sdf.format(date1) + "\n");
-
                         });
                     }
                     else if (index == 20) {
-                        if (Gamecontinue) {
+                        if (GameContinue) {
                             Platform.runLater(() ->
                             {
                                 new ShowStringDetail().display("\n对手已退出游戏\n对局结束");
                             });
                             myTurn = false;
-                            Gamecontinue = false;
+                            GameContinue = false;
                         }
                         if (stop)
                             stop = false;
@@ -477,7 +470,7 @@ public class Player extends Application implements IndexForGame {
                         break;
                     }
                 } catch (IOException e) {
-                    Gamecontinue = false;
+                    GameContinue = false;
                     release();
                 }
             }
@@ -485,18 +478,18 @@ public class Player extends Application implements IndexForGame {
     }
 
     private void TimeforP() throws InterruptedException {
-        while (waiting) {
-            Thread.sleep(100);
-        }
-        waiting = true;
+    while (waiting) {
+      Thread.sleep(100);
+    }
+      waiting = true;
     }
 
-    private void TimeForC() throws InterruptedException {
-        while (stop) {
-            Thread.sleep(100);
+  private void TimeForC() throws InterruptedException {
+    while (stop) {
+      Thread.sleep(100);
         }
         stop = true;
-    }
+  }
 
     private void socketevent() throws IOException {
         OutputStream.writeInt(1);
@@ -504,17 +497,18 @@ public class Player extends Application implements IndexForGame {
         OutputStream.writeInt(colNow);
     }
 
-    private void GetServer() throws Exception {
+  private void GetServer() throws Exception {
         //提示语
-        String s = "\nWin！！ ";
-        String s1 = "\nLoss ToT";
-        String s2 = "\n平局噢\n ";
+    String s = "\nWin！！ ";
+    String s1 = "\nLoss ToT";
+    String s2 = "\n平局噢\n ";
 
-        TimeForC();
-        if (!Gamecontinue)
+    TimeForC();
+        if (!GameContinue) {
             return;
+        }
         if (data == p1win) {
-            Gamecontinue = false;
+            GameContinue = false;
             waiting = false;
             OutputStream.writeInt(8);
             if (myChess == 1) {
@@ -527,7 +521,7 @@ public class Player extends Application implements IndexForGame {
                 });
             }
         } else if (data == p2win) {
-            Gamecontinue = false;
+            GameContinue = false;
             waiting = false;
             if (myChess == 2) {
                 Platform.runLater(() -> {
@@ -539,7 +533,7 @@ public class Player extends Application implements IndexForGame {
                 });
             }
         } else if (data == equalpp) {
-            Gamecontinue = false;
+            GameContinue = false;
             waiting = false;
             Platform.runLater(() -> {
                 new ShowStringDetail().display(s2);
@@ -555,7 +549,7 @@ public class Player extends Application implements IndexForGame {
         Panevent2(row, col);
     }
 
-    private void Paneevent(int player) {
+  private void Paneevent(int player) {
         linePane.setOnMouseClicked(e1 -> {
             if (myTurn) {
                 bk:
@@ -609,11 +603,11 @@ public class Player extends Application implements IndexForGame {
 
                 backchess(circles[row][col], row, col);
             }
-            linePane.getChildren().add(circles[row][col]);
-            signForpane.setCenterX(linePane.zuobiaox(row, col));
-            signForpane.setCenterY(linePane.zuobiaoy(row, col));
-            linePane.getChildren().add(signForpane);
-            tchess.setText("到你了，别摆了");
+          linePane.getChildren().add(circles[row][col]);
+          signForpane.setCenterX(linePane.zuobiaox(row, col));
+          signForpane.setCenterY(linePane.zuobiaoy(row, col));
+          linePane.getChildren().add(signForpane);
+          tchess.setText("到你了，别摆了");
         });
     }
 
@@ -637,7 +631,7 @@ public class Player extends Application implements IndexForGame {
                 }
             }
         }
-        Gamecontinue = true;
+        GameContinue = true;
         textArea.clear();
         player = 0;
         myChess = 0;
@@ -650,7 +644,7 @@ public class Player extends Application implements IndexForGame {
 
 
     private void release() {
-        Gamecontinue = false;
+        GameContinue = false;
         OtherConnectionTo.close(Serverlist.getSocket(), OutputStream, InputStream);
     }
 
@@ -661,9 +655,9 @@ public class Player extends Application implements IndexForGame {
         while ((lineTxt = br.readLine()) != null) {
             String[] str = lineTxt.split(" ");
             for (int i=0;i<4;i++) {
-                PlayerMessage p=new PlayerMessage(str[0],str[1]
-                        ,Integer.parseInt(str[2])
-                        ,Integer.parseInt(str[3]));
+                PlayerMessage p=new PlayerMessage(str[0], str[1]
+                        , Integer.parseInt(str[2])
+                        , Integer.parseInt(str[3]));
                 playerMessage.add(p);
                 break;
             }
