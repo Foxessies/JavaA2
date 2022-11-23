@@ -58,8 +58,6 @@ public class WholePaneGame extends Pane {
     {
         return chessXY[row * 3 + col][1];
     }
-
-
 }
 
 
