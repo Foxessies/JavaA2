@@ -2,25 +2,19 @@ package twicetry.server;
 
 import twicetry.OtherConnectionTo;
 import twicetry.ShowStringDetail;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-/**
- * 获取服务器的连接
- */
 public class Serverlist
 {
     private  final static Serverlist connect  = new Serverlist();
     private static Socket socket;
     private Serverlist() {}
 
-    public static void connectionAgain()
-    {
-        try
-        {
+    public static void connectionAgain() {
+        try {
             //建立连接（本地连接）
             socket = new Socket("127.0.0.1", 9520);
         }
@@ -53,11 +47,3 @@ public class Serverlist
         OtherConnectionTo.close(socket);
     }
 }
-
-
-
-
-
-
-
-
